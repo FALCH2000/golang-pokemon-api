@@ -3,10 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 	"pokemon-api/database"
+
+	"github.com/gorilla/mux"
 )
 
 func getAllPokemons(w http.ResponseWriter, r *http.Request) {
@@ -14,10 +16,15 @@ func getAllPokemons(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "88"
+	}
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.Use(commonMiddleware)
 	myRouter.HandleFunc("/pokemons", getAllPokemons).Methods("GET")
-	log.Fatal(http.ListenAndServe(":10000", myRouter))
+	//MAKE IT FOR THE POST METHOD
+	log.Fatal(http.ListenAndServe(":"+port, myRouter))
 }
 
 func commonMiddleware(next http.Handler) http.Handler {
