@@ -22,7 +22,7 @@ func insertPokemon(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(reqBody, &newPokemon)
 
-	//database.PokemonDb[newPokemon.ID] = newPokemon
+	database.PokemonDb[newPokemon.ID] = newPokemon
 }
 
 func handleRequests() {
